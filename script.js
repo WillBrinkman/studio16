@@ -1,28 +1,35 @@
 // TODO: add code here
 
 function init() {
-const astronauts = fetch("https://handlers.education.launchcode.org/static/astronauts.json")
-astronauts.then( function(response) {
-response.json().then(function(json) {
-    let div = document.getElementById("container");
-   // div.sort(function(a,b) {return (a.hoursInSpace > b.hoursInSpace)
-// div.sort(a,b){
-// return a.hoursInSpace < b.hoursInSpace ;
+    const astronauts = fetch("https://handlers.education.launchcode.org/static/astronauts.json")
+    astronauts.then(function (response) {
+        response.json().then(function (json) {
+            let div = document.getElementById("container");
+            console.log(div);
+            console.log(json);
 
-// }
+            json.sort(function (a, b) {
+                return (b.hoursInSpace - a.hoursInSpace)
+            });
 
-// function greenTrue(active) {
-//     if (active === true) {
-//         return `<li style="color: green;">Active :  ${json[i].active}</li>` ;
-//     } else {return `<li>Active :  ${json[i].active}</li>` 
-// }
-// }
 
-div.innerHTML += `<div>Astronaut Count: ${json.length}</div> <br>`;
+            // div.sort(a,b){
+            // return a.hoursInSpace < b.hoursInSpace ;
+            // }
 
-    for(let i=0; i<json.length; i++) {
-        
-        div.innerHTML += `
+            function greenTrue(active) {
+                if (active === true) {
+                    return `<li class="true-green">Active :  ${active}</li>`;
+                } else {
+                    return `<li>Active :  ${active}</li>`
+                }
+            }
+
+            div.innerHTML += `<div>Astronaut Count: ${json.length}</div> <br>`;
+
+            for (let i = 0; i < json.length; i++) {
+
+                div.innerHTML += `
         
     <div class="container">
     
@@ -34,7 +41,7 @@ div.innerHTML += `<div>Astronaut Count: ${json.length}</div> <br>`;
 
             
             <li>Hours in Space : ${json[i].hoursInSpace}</li>
-            <li> Active: ${json[i].active} </li>
+            ${greenTrue(json[i].active)}
             <li>Skills : ${json[i].skills.join(", ")}</li>
         </ul>
         </div>
@@ -42,10 +49,10 @@ div.innerHTML += `<div>Astronaut Count: ${json.length}</div> <br>`;
         </div>
     </div>
     `;
-    }
+            }
 
-})
-});
+        })
+    });
 }
 
 window.onload = init
